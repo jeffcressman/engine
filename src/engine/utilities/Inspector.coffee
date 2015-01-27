@@ -566,12 +566,14 @@ class Inspector
           element = element.parentNode
           scope = @engine.identify(element)
           parenting = true
-        top = data[scope + '[y]'] ? 0
-        left = data[scope + '[x]'] ? 0
-        clientTop = data[id + '[y]'] ? 0
-        clientLeft = data[id + '[x]'] ? 0
+        top = (data[scope + '[y]'] ? 0) - element.offsetTop 
+        left = (data[scope + '[x]'] ? 0) - element.offsetLeft
+        clientTop = (data[id + '[y]'] ? 0) - element.offsetTop 
+        clientLeft = (data[id + '[x]'] ? 0) - element.offsetLeft
         offsetTop = top + clientTop
         offsetLeft = left + clientLeft
+        console.log(left, clientLeft, offsetLeft, id, scope)
+        console.log(top, clientTop, offsetTop, id, scope)
       else
         top = element.offsetTop
         left = element.offsetLeft

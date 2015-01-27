@@ -166,10 +166,10 @@ Grammar = (function() {
   /* Private*/
 
   Grammar._toString = function(input) {
-    if (Object.prototype.toString.call(input) === '[object String]') {
+    if (toString.call(input) === '[object String]') {
       return input;
     }
-    if (Object.prototype.toString.call(input) === '[object Array]') {
+    if (toString.call(input) === '[object Array]') {
       return input.join('');
     }
     return '';
@@ -6598,7 +6598,7 @@ ErrorReporter = (function() {
     if (sourceCode == null) {
       throw new Error('Source code not provided');
     }
-    if (Object.prototype.toString.call(sourceCode) !== '[object String]') {
+    if (toString.call(sourceCode) !== '[object String]') {
       throw new TypeError('Source code must be a string');
     }
     this._sourceCode = sourceCode;
@@ -6609,7 +6609,7 @@ ErrorReporter = (function() {
     if (message == null) {
       throw new Error('Message not provided');
     }
-    if (Object.prototype.toString.call(message) !== '[object String]') {
+    if (toString.call(message) !== '[object String]') {
       throw new TypeError('Message must be a string');
     }
     if (message.length === 0) {
@@ -6618,7 +6618,7 @@ ErrorReporter = (function() {
     if (lineNumber == null) {
       throw new Error('Line number not provided');
     }
-    if (Object.prototype.toString.call(lineNumber) !== '[object Number]') {
+    if (toString.call(lineNumber) !== '[object Number]') {
       throw new TypeError('Line number must be a number');
     }
     if (lineNumber <= 0) {
@@ -6627,7 +6627,7 @@ ErrorReporter = (function() {
     if (columnNumber == null) {
       throw new Error('Column number not provided');
     }
-    if (Object.prototype.toString.call(columnNumber) !== '[object Number]') {
+    if (toString.call(columnNumber) !== '[object Number]') {
       throw new TypeError('Column number must be a number');
     }
     if (columnNumber <= 0) {
@@ -25713,12 +25713,14 @@ Inspector = (function() {
           scope = this.engine.identify(element);
           parenting = true;
         }
-        top = (_ref1 = data[scope + '[y]']) != null ? _ref1 : 0;
-        left = (_ref2 = data[scope + '[x]']) != null ? _ref2 : 0;
-        clientTop = (_ref3 = data[id + '[y]']) != null ? _ref3 : 0;
-        clientLeft = (_ref4 = data[id + '[x]']) != null ? _ref4 : 0;
+        top = ((_ref1 = data[scope + '[y]']) != null ? _ref1 : 0) - element.offsetTop;
+        left = ((_ref2 = data[scope + '[x]']) != null ? _ref2 : 0) - element.offsetLeft;
+        clientTop = ((_ref3 = data[id + '[y]']) != null ? _ref3 : 0) - element.offsetTop;
+        clientLeft = ((_ref4 = data[id + '[x]']) != null ? _ref4 : 0) - element.offsetLeft;
         offsetTop = top + clientTop;
         offsetLeft = left + clientLeft;
+        console.log(left, clientLeft, offsetLeft, id, scope);
+        console.log(top, clientTop, offsetTop, id, scope);
       } else {
         top = element.offsetTop;
         left = element.offsetLeft;
